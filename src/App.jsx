@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from 'react';
 import './App.css';
 
@@ -11,40 +10,42 @@ const TodoForm = ({ newTodo, setNewTodo, addTodo }) => (
   <div className="w-1/4">
     <div className="w-full mb-4">
       <h2 className="text-lg font-semibold mb-2 text-gray-700">Add New To-Do</h2>
-      <label className="block mb-2 text-gray-800">
-        Title:
-        <input
-          className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-          type="text"
-          value={newTodo.title}
-          onChange={e => setNewTodo({ ...newTodo, title: e.target.value })}
-        />
-      </label>
-      <label className="block mb-2 text-gray-800">
-        Task:
-        <textarea
-          className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-          value={newTodo.task}
-          onChange={e => setNewTodo({ ...newTodo, task: e.target.value })}
-        />
-      </label>
-      <label className="block mb-4 text-gray-800">
-        Status:
-        <select
-          className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-          value={newTodo.status}
-          onChange={e => setNewTodo({ ...newTodo, status: e.target.value })}
+      <form onSubmit={(e) => { e.preventDefault(); addTodo(); }}>
+        <label className="block mb-2 text-gray-800">
+          Title:
+          <input
+            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+            type="text"
+            value={newTodo.title}
+            onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
+          />
+        </label>
+        <label className="block mb-2 text-gray-800">
+          Task:
+          <textarea
+            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+            value={newTodo.task}
+            onChange={(e) => setNewTodo({ ...newTodo, task: e.target.value })}
+          />
+        </label>
+        <label className="block mb-4 text-gray-800">
+          Status:
+          <select
+            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+            value={newTodo.status}
+            onChange={(e) => setNewTodo({ ...newTodo, status: e.target.value })}
+          >
+            <option value="Not Started">Not Started</option>
+            <option value="Ongoing">Ongoing</option>
+          </select>
+        </label>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition duration-300"
         >
-          <option value="Not Started">Not Started</option>
-          <option value="Ongoing">Ongoing</option>
-        </select>
-      </label>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition duration-300"
-        onClick={addTodo}
-      >
-        Add To-Do
-      </button>
+          Add To-Do
+        </button>
+      </form>
     </div>
   </div>
 );
@@ -53,7 +54,7 @@ const TodoList = ({ todos, updateTodo, deleteTodo, completed = false }) => (
   <div className="w-1/4">
     <h2 className="text-lg font-semibold mb-2 text-gray-700">{completed ? 'Completed Tasks' : 'To-Do List'}</h2>
     <ul>
-      {todos.map(todo => (
+      {todos.map((todo) => (
         <li key={todo.id} className={`mb-2 bg-white p-4 rounded-md shadow-md ${completed ? 'line-through' : ''}`}>
           <strong className="text-gray-800">{todo.title}</strong> - {todo.status}
           <p className="mb-2">{todo.task}</p>
@@ -93,17 +94,17 @@ function App() {
   };
 
   const updateTodo = (id, updatedTodo) => {
-    const updatedTodos = todos.map(todo => (todo.id === id ? { ...todo, ...updatedTodo } : todo));
+    const updatedTodos = todos.map((todo) => (todo.id === id ? { ...todo, ...updatedTodo } : todo));
     setTodos(updatedTodos);
   };
 
-  const deleteTodo = id => {
-    const updatedTodos = todos.filter(todo => todo.id !== id);
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
 
-  const completedTodos = todos.filter(todo => todo.status === 'Complete');
-  const ongoingTodos = todos.filter(todo => todo.status !== 'Complete');
+  const completedTodos = todos.filter((todo) => todo.status === 'Complete');
+  const ongoingTodos = todos.filter((todo) => todo.status !== 'Complete');
 
   return (
     <>
