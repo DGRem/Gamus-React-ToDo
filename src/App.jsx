@@ -6,49 +6,61 @@ const initialTodos = [
   { id: 2, title: 'Example Task 2', task: 'Do something else', status: 'Ongoing' },
 ];
 
-const TodoForm = ({ newTodo, setNewTodo, addTodo }) => (
-  <div className="w-1/4">
-    <div className="w-full mb-4">
-      <h2 className="text-lg font-semibold mb-2 text-gray-700">Add New To-Do</h2>
-      <form onSubmit={(e) => { e.preventDefault(); addTodo(); }}>
-        <label className="block mb-2 text-gray-800">
-          Title:
-          <input
-            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-            type="text"
-            value={newTodo.title}
-            onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
-          />
-        </label>
-        <label className="block mb-2 text-gray-800">
-          Task:
-          <textarea
-            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-            value={newTodo.task}
-            onChange={(e) => setNewTodo({ ...newTodo, task: e.target.value })}
-          />
-        </label>
-        <label className="block mb-4 text-gray-800">
-          Status:
-          <select
-            className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
-            value={newTodo.status}
-            onChange={(e) => setNewTodo({ ...newTodo, status: e.target.value })}
+const TodoForm = ({ newTodo, setNewTodo, addTodo }) => {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addTodo();
+    }
+  };
+
+  return (
+    <div className="w-1/4">
+      <div className="w-full mb-4">
+        <h2 className="text-lg font-semibold mb-2 text-gray-700">Add New To-Do</h2>
+        <form onSubmit={(e) => { e.preventDefault(); addTodo(); }}>
+          <label className="block mb-2 text-gray-800">
+            Title:
+            <input
+              className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+              type="text"
+              value={newTodo.title}
+              onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
+              onKeyPress={handleKeyPress}
+            />
+          </label>
+          <label className="block mb-2 text-gray-800">
+            Task:
+            <textarea
+              className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+              value={newTodo.task}
+              onChange={(e) => setNewTodo({ ...newTodo, task: e.target.value })}
+              onKeyPress={handleKeyPress}
+            />
+          </label>
+          <label className="block mb-4 text-gray-800">
+            Status:
+            <select
+              className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
+              value={newTodo.status}
+              onChange={(e) => setNewTodo({ ...newTodo, status: e.target.value })}
+              onKeyPress={handleKeyPress}
+            >
+              <option value="Not Started">Not Started</option>
+              <option value="Ongoing">Ongoing</option>
+            </select>
+          </label>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition duration-300"
           >
-            <option value="Not Started">Not Started</option>
-            <option value="Ongoing">Ongoing</option>
-          </select>
-        </label>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition duration-300"
-        >
-          Add To-Do
-        </button>
-      </form>
+            Add To-Do
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const TodoList = ({ todos, updateTodo, deleteTodo, completed = false }) => (
   <div className="w-1/4">
