@@ -79,7 +79,7 @@ function App() {
         <div className='w-1/4'>
           <h2 className="text-lg font-semibold mb-2 text-gray-700">To-Do List</h2>
           <ul>
-            {ongoingTodos.map(todo => (
+            {ongoingTodos.slice(0).reverse().map(todo => (
               <li key={todo.id} className="mb-2 bg-white p-4 rounded-md shadow-md">
                 <strong className="text-gray-800">{todo.title}</strong> - {todo.status}
                 <p className='mb-2'>{todo.task}</p>
